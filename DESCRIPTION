@@ -1,0 +1,25 @@
+Package: rpass
+Title: Native Client for 'pass'-Compatible Password Stores
+Version: 0.0.0.9000
+Authors@R: person("Giuseppe", "Acito", email = "giuseppe.acito@gmail.com", role = c("aut", "cre"))
+Description: Read and manage entries in a password store compatible with
+    'pass', the standard unix password manager <https://www.passwordstore.org/>,
+    without shelling out to the 'pass' or 'gpg' binaries at runtime. OpenPGP
+    parsing, decryption and encryption are implemented natively via the Rust
+    'pgp' crate, embedded through 'extendr'/'rextendr'.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+SystemRequirements: Cargo (Rust's package manager), rustc >= 1.88
+Imports:
+    getPass,
+    openssl,
+    fs
+Suggests:
+    testthat (>= 3.0.0),
+    withr
+Config/testthat/edition: 3
+Config/rextendr/version: 0.5.0
+Depends: 
+    R (>= 4.2)
+Config/roxygen2/version: 8.0.0

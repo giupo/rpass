@@ -1,0 +1,23 @@
+[package]
+name = 'rpass'
+publish = false
+version = '0.1.0'
+edition = '2021'
+rust-version = '1.88'
+
+[lib]
+crate-type = [ 'rlib', 'staticlib' ]
+name = 'rpass'
+
+[[bin]]
+name = 'document'
+path = 'document.rs'
+
+[dependencies]
+extendr-api = '*'
+pgp = "0.20"
+rand = "0.8"
+
+[profile.release]
+lto = true
+codegen-units = 1
