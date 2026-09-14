@@ -15,3 +15,5 @@ src/.gitignore
 ..Rcheck
 .git
 uv.lock
+.editorconfig
+.bumpversion.cfg
