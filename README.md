@@ -6,7 +6,7 @@ password stores. rpass reads and writes the same `~/.password-store` tree of
 and encryption -- it never shells out to the `pass` or `gpg` binaries, and
 never reads GnuPG's live agent-managed keyring.
 
-OpenPGP support comes from the Rust [`pgp`](https://crates.io/crates/pgp)
+OpenPGP support comes from the Rust [`pgp`](https://docs.rs/pgp)
 crate (aka [`rpgp`](https://github.com/rpgp/rpgp)), embedded via
 [`extendr`](https://extendr.github.io/)/`rextendr` and compiled when the
 package is installed. Installing rpass therefore requires a Rust toolchain

@@ -6,6 +6,7 @@
 ^src/Makevars$
 ^src/Makevars\.win$
 ^LICENSE\.md$
+^cran-comments\.md$
 mise.toml
 .venv
 pyproject.toml
@@ -17,3 +18,4 @@ src/.gitignore
 uv.lock
 .editorconfig
 .bumpversion.cfg
+^CRAN-SUBMISSION$
