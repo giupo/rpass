@@ -15,3 +15,9 @@ rpass = "rpass:main"
 [build-system]
 requires = ["uv_build>=0.12.12,<0.13.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "bump2version>=1.0.1",
+    "gitchangelog>=3.0.4",
+]
