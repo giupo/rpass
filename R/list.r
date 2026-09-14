@@ -33,14 +33,14 @@ print.rpass_tree <- function(x, ...) {
   for (i in seq_along(unique(heads))) {
     head <- unique(heads)[i]
     is_last <- i == length(unique(heads))
-    connector <- if (is_last) "└── " else "├── "
+    connector <- if (is_last) "\u2514\u2500\u2500 " else "\u251c\u2500\u2500 "
     cat(prefix, connector, head, "\n", sep = "")
 
     children <- segments[heads == head]
     children <- Filter(function(s) length(s) > 1, children)
     children <- lapply(children, `[`, -1)
     if (length(children) > 0) {
-      child_prefix <- paste0(prefix, if (is_last) "    " else "│   ")
+      child_prefix <- paste0(prefix, if (is_last) "    " else "\u2502   ")
       .print_tree_level(children, child_prefix)
     }
   }

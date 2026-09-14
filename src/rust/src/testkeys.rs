@@ -11,6 +11,10 @@ use rand::thread_rng;
 /// Internal only (no `@export`): used exclusively by the testthat suite to
 /// avoid ever touching a real GPG keyring or the real password store. Returns
 /// an R list with `secret` and `public` armored key strings.
+///
+/// @param user_id User ID string embedded in the generated key (e.g. `"Test <test@example.com>"`).
+/// @param passphrase Passphrase used to protect the generated secret key.
+/// @return A list with `secret` and `public`, the armored secret and public keys.
 #[extendr]
 fn generate_test_keypair(user_id: &str, passphrase: &str) -> extendr_api::Result<List> {
     let mut rng = thread_rng();

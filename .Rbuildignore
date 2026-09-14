@@ -9,3 +9,9 @@
 mise.toml
 .venv
 pyproject.toml
+.gitignore
+.python-version
+src/.gitignore
+..Rcheck
+.git
+

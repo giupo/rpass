@@ -14,6 +14,10 @@ use crate::keyring::SecretKeyHandle;
 /// default when real GnuPG encrypts, even though `pass` itself disables
 /// compression via `--compress-algo=none`) by calling `decompress()`, which is
 /// a no-op when the message was not compressed.
+///
+/// @param handle A [SecretKeyHandle], holding the unlocked secret key.
+/// @param data Raw (non-armored) OpenPGP message bytes to decrypt.
+/// @return The decrypted plaintext, as a raw vector.
 #[extendr]
 fn decrypt_message(handle: &SecretKeyHandle, data: &[u8]) -> extendr_api::Result<Vec<u8>> {
     let message =
@@ -46,6 +50,10 @@ fn encryption_targets(pubkey: &SignedPublicKey) -> Vec<&SignedPublicSubKey> {
 
 /// Encrypt plaintext to one or more recipients (armored public keys), producing
 /// a binary OpenPGP message compatible with the `.gpg` format used by `pass`.
+///
+/// @param plaintext Raw plaintext bytes to encrypt.
+/// @param recipient_armors One or more armored OpenPGP public keys to encrypt to.
+/// @return The encrypted message, as a raw vector (binary, non-armored).
 #[extendr]
 fn encrypt_message(plaintext: &[u8], recipient_armors: Vec<String>) -> extendr_api::Result<Vec<u8>> {
     if recipient_armors.is_empty() {
@@ -87,6 +95,9 @@ fn encrypt_message(plaintext: &[u8], recipient_armors: Vec<String>) -> extendr_a
 
 /// Fingerprint of an armored OpenPGP public key, for matching against `.gpg-id`
 /// recipient identifiers.
+///
+/// @param armor_text An armored OpenPGP public key.
+/// @return The key's fingerprint, as an uppercase hex string.
 #[extendr]
 fn public_key_fingerprint(armor_text: &str) -> extendr_api::Result<String> {
     let (pubkey, _headers) = SignedPublicKey::from_string(armor_text)

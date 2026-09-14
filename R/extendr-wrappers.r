@@ -11,14 +11,25 @@ NULL
 #' default when real GnuPG encrypts, even though `pass` itself disables
 #' compression via `--compress-algo=none`) by calling `decompress()`, which is
 #' a no-op when the message was not compressed.
+#'
+#' @param handle A [SecretKeyHandle], holding the unlocked secret key.
+#' @param data Raw (non-armored) OpenPGP message bytes to decrypt.
+#' @return The decrypted plaintext, as a raw vector.
 decrypt_message <- function(handle, data) .Call(wrap__decrypt_message, handle, data)
 
 #' Encrypt plaintext to one or more recipients (armored public keys), producing
 #' a binary OpenPGP message compatible with the `.gpg` format used by `pass`.
+#'
+#' @param plaintext Raw plaintext bytes to encrypt.
+#' @param recipient_armors One or more armored OpenPGP public keys to encrypt to.
+#' @return The encrypted message, as a raw vector (binary, non-armored).
 encrypt_message <- function(plaintext, recipient_armors) .Call(wrap__encrypt_message, plaintext, recipient_armors)
 
 #' Fingerprint of an armored OpenPGP public key, for matching against `.gpg-id`
 #' recipient identifiers.
+#'
+#' @param armor_text An armored OpenPGP public key.
+#' @return The key's fingerprint, as an uppercase hex string.
 public_key_fingerprint <- function(armor_text) .Call(wrap__public_key_fingerprint, armor_text)
 
 #' Generate a throwaway Ed25519/Curve25519 OpenPGP keypair for tests.
@@ -26,11 +37,15 @@ public_key_fingerprint <- function(armor_text) .Call(wrap__public_key_fingerprin
 #' Internal only (no `@export`): used exclusively by the testthat suite to
 #' avoid ever touching a real GPG keyring or the real password store. Returns
 #' an R list with `secret` and `public` armored key strings.
+#'
+#' @param user_id User ID string embedded in the generated key (e.g. `"Test <test@example.com>"`).
+#' @param passphrase Passphrase used to protect the generated secret key.
+#' @return A list with `secret` and `public`, the armored secret and public keys.
 generate_test_keypair <- function(user_id, passphrase) .Call(wrap__generate_test_keypair, user_id, passphrase)
 
 #' An unlocked OpenPGP secret key, held for the lifetime of an R session.
 #'
-#' Not exported directly to R users: `pass_key()` (R/key.R) wraps this in an
+#' Not exported directly to R users: `pass_key()` (R/key.r) wraps this in an
 #' idiomatic S3 object. The passphrase is validated eagerly in `new()` so
 #' callers get a clear error immediately instead of a confusing failure on
 #' first decrypt.

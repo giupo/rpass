@@ -4,7 +4,7 @@ use pgp::types::{KeyDetails, Password};
 
 /// An unlocked OpenPGP secret key, held for the lifetime of an R session.
 ///
-/// Not exported directly to R users: `pass_key()` (R/key.R) wraps this in an
+/// Not exported directly to R users: `pass_key()` (R/key.r) wraps this in an
 /// idiomatic S3 object. The passphrase is validated eagerly in `new()` so
 /// callers get a clear error immediately instead of a confusing failure on
 /// first decrypt.
