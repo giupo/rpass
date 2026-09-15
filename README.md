@@ -8,7 +8,7 @@ never reads GnuPG's live agent-managed keyring.
 
 OpenPGP support comes from the Rust [`pgp`](https://docs.rs/pgp)
 crate (aka [`rpgp`](https://github.com/rpgp/rpgp)), embedded via
-[`extendr`](https://extendr.github.io/)/`rextendr` and compiled when the
+[`extendr`](https://extendr.rs/)/`rextendr` and compiled when the
 package is installed. Installing rpass therefore requires a Rust toolchain
 (`rustc`/`cargo`) at build time, but nothing extra at runtime.
 

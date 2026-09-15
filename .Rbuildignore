@@ -19,3 +19,4 @@ uv.lock
 .editorconfig
 .bumpversion.cfg
 ^CRAN-SUBMISSION$
+^.*\.asc$
