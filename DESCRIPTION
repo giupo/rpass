@@ -1,6 +1,6 @@
 Package: rpass
 Title: Native Client for 'pass'-Compatible Password Stores
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: person("Giuseppe", "Acito", email = "giuseppe.acito@gmail.com", role = c("aut", "cre"))
 Description: Read and manage entries in a password store compatible with
     'pass', the standard unix password manager <https://www.passwordstore.org/>,
