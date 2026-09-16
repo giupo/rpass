@@ -23,3 +23,25 @@ An \code{rpass_entry}: a list with \code{name}, \code{password} (a masked
 \description{
 Decrypt and show a password store entry
 }
+\examples{
+store <- tempfile("rpass-store-")
+keyring <- tempfile("rpass-keyring-")
+Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+secret_path <- tempfile(fileext = ".asc")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$secret, secret_path)
+writeLines(keys$public, public_path)
+
+key <- pass_key(secret_path, passphrase = "hunter2")
+fp <- pass_import_pubkey(public_path)
+pass_init("", fp)
+pass_insert("Lavoro/SECRET", "s3kr1t!", fields = list(login = "gacito"))
+
+entry <- pass_show("Lavoro/SECRET", key = key)
+entry$fields$login
+pass_reveal(entry$password)
+
+Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
+}

@@ -44,3 +44,22 @@ Unlike \verb{pass insert -m}'s interactive multi-line prompt, this takes
 structured arguments -- more scriptable, and avoids terminal-raw-mode
 handling in a library context.
 }
+\examples{
+store <- tempfile("rpass-store-")
+keyring <- tempfile("rpass-keyring-")
+Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$public, public_path)
+fp <- pass_import_pubkey(public_path)
+pass_init("", fp)
+
+pass_insert(
+  "Lavoro/SECRET", "s3kr1t!",
+  fields = list(login = "gacito", url = "https://example.com"),
+  notes = "a free-text note line"
+)
+
+Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
+}

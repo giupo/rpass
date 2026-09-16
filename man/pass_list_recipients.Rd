@@ -15,3 +15,12 @@ A data frame with columns \code{fingerprint} and \code{path}.
 \description{
 List public keys in the local rpass keyring
 }
+\examples{
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$public, public_path)
+
+keyring <- tempfile("rpass-keyring-")
+pass_import_pubkey(public_path, keyring = keyring)
+pass_list_recipients(keyring)
+}

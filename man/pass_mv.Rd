@@ -21,3 +21,20 @@ Note: this moves the ciphertext file as-is; it does not re-encrypt to a
 new \code{.gpg-id} even if \code{to} falls under a directory with different
 recipients. Use \code{\link[=pass_rm]{pass_rm()}} + \code{\link[=pass_insert]{pass_insert()}} if re-encryption is needed.
 }
+\examples{
+store <- tempfile("rpass-store-")
+keyring <- tempfile("rpass-keyring-")
+Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$public, public_path)
+fp <- pass_import_pubkey(public_path)
+pass_init("", fp)
+pass_insert("old/loc", "pw")
+
+pass_mv("old/loc", "new/loc")
+pass_list()
+
+Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
+}

@@ -10,6 +10,14 @@
 #'   key, e.g. from `gpg --export --armor <id> > recipient.asc`.
 #' @param keyring Local keyring directory, see [pass_keyring_dir()].
 #' @return The recipient's fingerprint, invisibly.
+#' @examples
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#'
+#' keyring <- tempfile("rpass-keyring-")
+#' fingerprint <- pass_import_pubkey(public_path, keyring = keyring)
+#' fingerprint
 #' @export
 pass_import_pubkey <- function(armor_file, keyring = pass_keyring_dir()) {
   armor_file <- fs::path_expand(armor_file)
@@ -31,6 +39,14 @@ pass_import_pubkey <- function(armor_file, keyring = pass_keyring_dir()) {
 #'
 #' @param keyring Local keyring directory, see [pass_keyring_dir()].
 #' @return A data frame with columns `fingerprint` and `path`.
+#' @examples
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#'
+#' keyring <- tempfile("rpass-keyring-")
+#' pass_import_pubkey(public_path, keyring = keyring)
+#' pass_list_recipients(keyring)
 #' @export
 pass_list_recipients <- function(keyring = pass_keyring_dir()) {
   if (!fs::dir_exists(keyring)) {

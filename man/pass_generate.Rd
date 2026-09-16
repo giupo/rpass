@@ -44,3 +44,23 @@ The generated \link[=new_rpass_secret]{rpass_secret}, invisibly.
 \description{
 Generate a random password store entry
 }
+\examples{
+store <- tempfile("rpass-store-")
+keyring <- tempfile("rpass-keyring-")
+Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+secret_path <- tempfile(fileext = ".asc")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$secret, secret_path)
+writeLines(keys$public, public_path)
+
+key <- pass_key(secret_path, passphrase = "hunter2")
+fp <- pass_import_pubkey(public_path)
+pass_init("", fp)
+
+pass_generate("Lavoro/NEW", length = 24)
+pass_generate("Lavoro/NEW", in_place = TRUE) # rotate, keeping fields/notes
+
+Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
+}

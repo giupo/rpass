@@ -16,7 +16,7 @@ package is installed. Installing rpass therefore requires a Rust toolchain
 
 ```r
 # install.packages("remotes")
-remotes::install_github("<your-username>/rpass")
+remotes::install_github("giupo/rpass")
 ```
 
 Requires `rustc` >= 1.88 and `cargo` available at install time.

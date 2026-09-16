@@ -22,3 +22,12 @@ rpass keeps its own small directory of armored public keys (see
 \code{\link[=pass_keyring_dir]{pass_keyring_dir()}}), populated explicitly via this function, once per
 recipient.
 }
+\examples{
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$public, public_path)
+
+keyring <- tempfile("rpass-keyring-")
+fingerprint <- pass_import_pubkey(public_path, keyring = keyring)
+fingerprint
+}

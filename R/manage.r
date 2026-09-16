@@ -6,6 +6,22 @@
 #'   entries under it are removed.
 #' @param force If `FALSE` (default), errors when there is nothing to remove.
 #' @return `NULL`, invisibly.
+#' @examples
+#' store <- tempfile("rpass-store-")
+#' keyring <- tempfile("rpass-keyring-")
+#' Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+#'
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#' fp <- pass_import_pubkey(public_path)
+#' pass_init("", fp)
+#' pass_insert("todelete", "pw")
+#'
+#' pass_rm("todelete")
+#' pass_rm("nothing-here", force = TRUE) # would otherwise error
+#'
+#' Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
 #' @export
 pass_rm <- function(name, store = pass_store(), recursive = FALSE, force = FALSE) {
   if (isTRUE(recursive)) {
@@ -37,6 +53,22 @@ pass_rm <- function(name, store = pass_store(), recursive = FALSE, force = FALSE
 #' @param store Store root, see [pass_store()].
 #' @param force If `FALSE` (default), refuses to overwrite an existing `to`.
 #' @return `NULL`, invisibly.
+#' @examples
+#' store <- tempfile("rpass-store-")
+#' keyring <- tempfile("rpass-keyring-")
+#' Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+#'
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#' fp <- pass_import_pubkey(public_path)
+#' pass_init("", fp)
+#' pass_insert("old/loc", "pw")
+#'
+#' pass_mv("old/loc", "new/loc")
+#' pass_list()
+#'
+#' Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
 #' @export
 pass_mv <- function(from, to, store = pass_store(), force = FALSE) {
   from_path <- .entry_path(from, store)
@@ -58,6 +90,22 @@ pass_mv <- function(from, to, store = pass_store(), force = FALSE) {
 #'
 #' @inheritParams pass_mv
 #' @return `NULL`, invisibly.
+#' @examples
+#' store <- tempfile("rpass-store-")
+#' keyring <- tempfile("rpass-keyring-")
+#' Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+#'
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#' fp <- pass_import_pubkey(public_path)
+#' pass_init("", fp)
+#' pass_insert("orig", "pw")
+#'
+#' pass_cp("orig", "copy")
+#' pass_list()
+#'
+#' Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
 #' @export
 pass_cp <- function(from, to, store = pass_store(), force = FALSE) {
   from_path <- .entry_path(from, store)
@@ -82,6 +130,20 @@ pass_cp <- function(from, to, store = pass_store(), force = FALSE) {
 #' @param gpg_id One or more recipient fingerprints.
 #' @param store Store root, see [pass_store()].
 #' @return `NULL`, invisibly.
+#' @examples
+#' store <- tempfile("rpass-store-")
+#' keyring <- tempfile("rpass-keyring-")
+#' Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+#'
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#' fp <- pass_import_pubkey(public_path)
+#'
+#' pass_init("", fp)
+#' readLines(file.path(store, ".gpg-id"))
+#'
+#' Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
 #' @export
 pass_init <- function(path, gpg_id, store = pass_store()) {
   gpg_id <- .normalize_id(gpg_id)

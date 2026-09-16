@@ -12,3 +12,11 @@ An \code{rpass_key} object.
 \description{
 The key most recently set via \code{pass_key(..., set_default = TRUE)}.
 }
+\examples{
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+secret_path <- tempfile(fileext = ".asc")
+writeLines(keys$secret, secret_path)
+
+pass_key(secret_path, passphrase = "hunter2") # set_default = TRUE by default
+pass_default_key()
+}

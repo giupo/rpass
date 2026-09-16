@@ -14,6 +14,14 @@
 #' @param set_default If `TRUE` (default), sets this as the session's default
 #'   key so `key=` does not need to be supplied to other `pass_*()` calls.
 #' @return An `rpass_key` object.
+#' @examples
+#' # A throwaway keypair, so this example needs no real GPG installation.
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' secret_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$secret, secret_path)
+#'
+#' key <- pass_key(secret_path, passphrase = "hunter2")
+#' key
 #' @export
 pass_key <- function(path,
                       passphrase = getPass::getPass("GPG passphrase: "),
@@ -44,6 +52,13 @@ print.rpass_key <- function(x, ...) {
 #' The key most recently set via `pass_key(..., set_default = TRUE)`.
 #'
 #' @return An `rpass_key` object.
+#' @examples
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' secret_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$secret, secret_path)
+#'
+#' pass_key(secret_path, passphrase = "hunter2") # set_default = TRUE by default
+#' pass_default_key()
 #' @export
 pass_default_key <- function() {
   key <- mget("default_key", envir = .rpass_env, ifnotfound = list(NULL))[[1]]

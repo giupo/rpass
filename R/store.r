@@ -7,6 +7,9 @@
 #'
 #' @param path Store root directory.
 #' @return Normalized store path (not required to exist yet).
+#' @examples
+#' pass_store() # default: PASSWORD_STORE_DIR, or ~/.password-store
+#' pass_store("~/work-store")
 #' @export
 pass_store <- function(path = Sys.getenv("PASSWORD_STORE_DIR", "~/.password-store")) {
   fs::path_expand(path)
@@ -21,6 +24,9 @@ pass_store <- function(path = Sys.getenv("PASSWORD_STORE_DIR", "~/.password-stor
 #'
 #' @param path Keyring directory.
 #' @return Normalized keyring directory path (not required to exist yet).
+#' @examples
+#' pass_keyring_dir() # default: RPASS_KEYRING_DIR, or ~/.rpass/keyring
+#' pass_keyring_dir("~/work-keyring")
 #' @export
 pass_keyring_dir <- function(path = Sys.getenv("RPASS_KEYRING_DIR", "~/.rpass/keyring")) {
   fs::path_expand(path)

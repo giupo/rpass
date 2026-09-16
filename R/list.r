@@ -4,6 +4,22 @@
 #' @return An `rpass_tree`: a sorted character vector of entry names
 #'   (relative to `store`, without the `.gpg` extension), with a print method
 #'   that renders them as a tree.
+#' @examples
+#' store <- tempfile("rpass-store-")
+#' keyring <- tempfile("rpass-keyring-")
+#' Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+#'
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#' fp <- pass_import_pubkey(public_path)
+#' pass_init("", fp)
+#' pass_insert("Lavoro/LDAP", "pw1")
+#' pass_insert("Lavoro/SECRET", "pw2")
+#'
+#' pass_list()
+#'
+#' Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
 #' @export
 pass_list <- function(store = pass_store()) {
   store <- fs::path_expand(store)
@@ -54,6 +70,22 @@ print.rpass_tree <- function(x, ...) {
 #' @param store Store root, see [pass_store()].
 #' @param ... Passed on to [grepl()].
 #' @return Character vector of matching entry names.
+#' @examples
+#' store <- tempfile("rpass-store-")
+#' keyring <- tempfile("rpass-keyring-")
+#' Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+#'
+#' keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+#' public_path <- tempfile(fileext = ".asc")
+#' writeLines(keys$public, public_path)
+#' fp <- pass_import_pubkey(public_path)
+#' pass_init("", fp)
+#' pass_insert("Lavoro/LDAP", "pw1")
+#' pass_insert("Personal/EMAIL", "pw2")
+#'
+#' pass_find("^Lavoro/")
+#'
+#' Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
 #' @export
 pass_find <- function(pattern, store = pass_store(), ...) {
   entries <- unclass(pass_list(store))

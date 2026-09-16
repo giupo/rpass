@@ -22,3 +22,20 @@ entries under it are removed.}
 \description{
 Remove a password store entry (or directory of entries)
 }
+\examples{
+store <- tempfile("rpass-store-")
+keyring <- tempfile("rpass-keyring-")
+Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$public, public_path)
+fp <- pass_import_pubkey(public_path)
+pass_init("", fp)
+pass_insert("todelete", "pw")
+
+pass_rm("todelete")
+pass_rm("nothing-here", force = TRUE) # would otherwise error
+
+Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
+}

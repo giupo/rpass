@@ -31,3 +31,12 @@ fails here, not on the first \code{\link[=pass_show]{pass_show()}}). rpass never
 live agent-managed keyring (\verb{~/.gnupg/private-keys-v1.d}) -- only an
 explicitly exported armored key file.
 }
+\examples{
+# A throwaway keypair, so this example needs no real GPG installation.
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+secret_path <- tempfile(fileext = ".asc")
+writeLines(keys$secret, secret_path)
+
+key <- pass_key(secret_path, passphrase = "hunter2")
+key
+}

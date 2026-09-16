@@ -20,3 +20,18 @@ pass_init(path, gpg_id, store = pass_store())
 Unlike upstream \code{pass}, \code{gpg_id} must be full fingerprint(s) -- rpass has
 no keyring-resolution engine to turn a name/email into a fingerprint.
 }
+\examples{
+store <- tempfile("rpass-store-")
+keyring <- tempfile("rpass-keyring-")
+Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$public, public_path)
+fp <- pass_import_pubkey(public_path)
+
+pass_init("", fp)
+readLines(file.path(store, ".gpg-id"))
+
+Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
+}

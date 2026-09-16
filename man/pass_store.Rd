@@ -18,3 +18,7 @@ The root directory of a \code{pass}-compatible password store: a tree of
 directory. Defaults to the \code{PASSWORD_STORE_DIR} environment variable (same
 variable used by the real \code{pass} CLI), falling back to \verb{~/.password-store}.
 }
+\examples{
+pass_store() # default: PASSWORD_STORE_DIR, or ~/.password-store
+pass_store("~/work-store")
+}

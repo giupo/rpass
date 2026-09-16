@@ -18,3 +18,7 @@ small directory of armored public keys, indexed by fingerprint, populated
 via \code{\link[=pass_import_pubkey]{pass_import_pubkey()}}. Defaults to the \code{RPASS_KEYRING_DIR} environment
 variable, falling back to \verb{~/.rpass/keyring}.
 }
+\examples{
+pass_keyring_dir() # default: RPASS_KEYRING_DIR, or ~/.rpass/keyring
+pass_keyring_dir("~/work-keyring")
+}

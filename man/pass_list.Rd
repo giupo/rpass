@@ -17,3 +17,20 @@ that renders them as a tree.
 \description{
 List entries in a password store
 }
+\examples{
+store <- tempfile("rpass-store-")
+keyring <- tempfile("rpass-keyring-")
+Sys.setenv(PASSWORD_STORE_DIR = store, RPASS_KEYRING_DIR = keyring)
+
+keys <- rpass:::generate_test_keypair("Demo <demo@example.com>", "hunter2")
+public_path <- tempfile(fileext = ".asc")
+writeLines(keys$public, public_path)
+fp <- pass_import_pubkey(public_path)
+pass_init("", fp)
+pass_insert("Lavoro/LDAP", "pw1")
+pass_insert("Lavoro/SECRET", "pw2")
+
+pass_list()
+
+Sys.unsetenv(c("PASSWORD_STORE_DIR", "RPASS_KEYRING_DIR"))
+}
