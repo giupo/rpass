@@ -8,6 +8,8 @@ Description: Read and manage entries in a password store compatible with
     parsing, decryption and encryption are implemented natively via the Rust
     'pgp' crate, embedded through 'extendr'/'rextendr'.
 License: MIT + file LICENSE
+URL: https://github.com/giupo/rpass
+BugReports: https://github.com/giupo/rpass/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 SystemRequirements: Cargo (Rust's package manager), rustc >= 1.88

@@ -1,5 +1,7 @@
 # rpass
 
+[![R-CMD-check](https://github.com/giupo/rpass/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/giupo/rpass/actions/workflows/R-CMD-check.yaml)
+
 A native R client for [`pass`](https://www.passwordstore.org/)-compatible
 password stores. rpass reads and writes the same `~/.password-store` tree of
 `.gpg` files that `pass` uses, but does its own OpenPGP parsing, decryption
